@@ -4,8 +4,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DRF.Controllers.Resources;
-using DRF.Models;
-using DRF.Persistance;
+using DRF.Core.Models;
+using DRF.Persistence;
 
 namespace DRF.Controllers
 {

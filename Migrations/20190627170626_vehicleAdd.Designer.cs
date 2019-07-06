@@ -4,14 +4,16 @@ using DRF.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DRF.Migrations
 {
     [DbContext(typeof(DRFDbContext))]
-    partial class DRFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190627170626_vehicleAdd")]
+    partial class vehicleAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,5 +1,8 @@
-import { MakeService } from './../Services/make.service';
-import { Component, OnInit, NgModule } from '@angular/core';
+
+import { VehicleService } from '../Services/vehicle.service';
+import { Component, OnInit } from '@angular/core';
+import {ToastyService} from 'ng2-toasty';
+
 
 @Component({
   selector: 'app-vehicle-form',
@@ -10,21 +13,36 @@ export class VehicleFormComponent implements OnInit {
 
   makes:any[];
   models:any[];
-  vehicle:any = {};
+  features:any[];
+  vehicle:any = {
+    features: [],
+    contact:{}
+  };
 
-  constructor(private makeService: MakeService) { }
+  constructor(private vehicleService: VehicleService, private toastyService: ToastyService) { }
 
   ngOnInit() {
-    this.makeService.getMakes().subscribe(makes => 
-      {
-        this.makes = makes;
-        //console.log(makes);
-      });
+    this.vehicleService.getMakes().subscribe(makes => this.makes = makes);
+    this.vehicleService.getFeatures().subscribe(features => this.features = features);
   }
 
   onMakeChange(){
-    var selectedMake = this.makes.find(x => x.id == this.vehicle.make);
+    var selectedMake = this.makes.find(x => x.id == this.vehicle.makeId);
     this.models = selectedMake ? selectedMake.models : [];
+  }
+
+  onFeatureToggle(featureId, $event){
+    if($event.target.checked){
+      this.vehicle.features.push(featureId);
+    }else{
+      var index = this.vehicle.features.indexOf(featureId);
+      this.vehicle.features.splice(index, 1);
+    }
+  }
+
+  submit(){
+    this.vehicleService.create(this.vehicle)
+                        .subscribe(res => console.log(res));
   }
 
 }

@@ -1,11 +1,14 @@
+import { AppErrorHandler } from './app.error-handler';
+
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import {ToastyModule} from 'ng2-toasty';
 
 
-import { MakeService } from './Services/make.service';
+import { VehicleService } from './Services/vehicle.service';
 
 
 import { AppComponent } from './app.component';
@@ -30,6 +33,7 @@ import { HttpModule } from '@angular/http';
     HttpClientModule,
     FormsModule,
     HttpModule,
+    ToastyModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
@@ -37,7 +41,10 @@ import { HttpModule } from '@angular/http';
       { path: 'vehicles/new', component: VehicleFormComponent },
     ])
   ],
-  providers: [MakeService],
+  providers: [
+    {provide: ErrorHandler, useClass: AppErrorHandler},
+    VehicleService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
