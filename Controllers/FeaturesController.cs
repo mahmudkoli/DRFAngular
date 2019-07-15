@@ -6,9 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using DRF.Controllers.Resources;
 using DRF.Core.Models;
 using DRF.Persistence;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DRF.Controllers
 {
+  [Authorize]
   public class FeaturesController : Controller
   {
     private readonly DRFDbContext context;

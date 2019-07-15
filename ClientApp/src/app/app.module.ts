@@ -9,6 +9,7 @@ import {ToastyModule} from 'ng2-toasty';
 
 
 import { VehicleService } from './Services/vehicle.service';
+import { PhotoService } from './Services/photo.service';
 
 
 import { AppComponent } from './app.component';
@@ -17,9 +18,11 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
-import { HttpModule } from '@angular/http';
+import { HttpModule, BrowserXhr } from '@angular/http';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { PaginationComponent } from './shared/pagination.component';
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
+import { ProgressService, BrowserXhrWithProgress } from './Services/progress.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { PaginationComponent } from './shared/pagination.component';
     FetchDataComponent,
     VehicleFormComponent,
     VehicleListComponent,
-    PaginationComponent
+    PaginationComponent,
+    ViewVehicleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,7 +45,8 @@ import { PaginationComponent } from './shared/pagination.component';
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'vehicles/new', component: VehicleFormComponent },
-      { path: 'vehicles/:id', component: VehicleFormComponent },
+      { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+      { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
       { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
@@ -51,7 +56,8 @@ import { PaginationComponent } from './shared/pagination.component';
   ],
   providers: [
     {provide: ErrorHandler, useClass: AppErrorHandler},
-    VehicleService
+    VehicleService,
+    PhotoService
   ],
   bootstrap: [AppComponent]
 })

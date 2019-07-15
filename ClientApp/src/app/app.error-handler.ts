@@ -13,21 +13,22 @@ export class AppErrorHandler implements ErrorHandler {
 
     handleError(error: any): void {
 
+      this.ngZone.run(() => {
+        this.toastyService.error({
+          title: 'Error',
+          msg: 'An unexpected error happend',
+          theme: 'bootstrap',
+          showClose: true,
+          timeout: 5000
+        });
+      });
+
       if (!isDevMode()) {
         const eventId = Sentry.captureException(error.originalError || error);
         // Sentry.showReportDialog({ eventId });
       } else {
-        // throw error;
+        throw error;
       }
 
-        this.ngZone.run(() => {
-            this.toastyService.error({
-              title: 'Error',
-              msg: 'An unexpected error happend',
-              theme: 'bootstrap',
-              showClose: true,
-              timeout: 5000
-            });
-        });
     }
 }
